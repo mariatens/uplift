@@ -5,8 +5,8 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faMicrophone } from '@fortawesome/free-solid-svg-icons';
 import './App.css';
 import { useState } from 'react';
+import image from './uplift.png';
 const { Configuration, OpenAIApi } = require('openai');
-
 function App() {
   const [apiResponse, setApiResponse] = useState('');
   const prompts = [
@@ -74,6 +74,7 @@ function App() {
           {apiResponse}
         </div>
       )}
+      <img width="300px" height="300px" alt="logo" src={image}></img>
     </main>
   );
 }
