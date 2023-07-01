@@ -1,24 +1,25 @@
-import logo from './logo.svg';
+import SpeechRecognition, {
+  useSpeechRecognition,
+} from 'react-speech-recognition';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faMicrophone } from '@fortawesome/free-solid-svg-icons';
 import './App.css';
 
 function App() {
+  const { transcript, browserSupportsSpeechRecognition } =
+    useSpeechRecognition();
+  if (!browserSupportsSpeechRecognition) {
+    return <span>Your browser doesn't support Speech to Text</span>;
+  }
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <main className="landing-page">
+      <h1>What's on your mind?</h1>
+      <button className="microphone" onClick={SpeechRecognition.startListening}>
+        <FontAwesomeIcon size="xl" icon={faMicrophone} />
+      </button>
+      <p>{transcript}</p>
+    </main>
   );
 }
 
