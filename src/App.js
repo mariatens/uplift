@@ -9,6 +9,17 @@ const { Configuration, OpenAIApi } = require('openai');
 
 function App() {
   const [apiResponse, setApiResponse] = useState('');
+  const prompts = [
+    "What's on your mind?",
+    'What surprised you today?',
+    'What is your intention for tomorrow?',
+  ];
+  // Generate a secure random number
+  const randomArray = new Uint32Array(1);
+  window.crypto.getRandomValues(randomArray);
+  const randomIndex = randomArray[0] % prompts.length;
+  const selectedPrompt = prompts[randomIndex];
+
   const configuration = new Configuration({
     apiKey: process.env.REACT_APP_OPENAI_API_KEY,
   });
@@ -42,7 +53,7 @@ function App() {
 
   return (
     <main className="landing-page">
-      <h1>What's on your mind?</h1>
+      <h1>{selectedPrompt}</h1>
       <button className="microphone" onClick={SpeechRecognition.startListening}>
         <FontAwesomeIcon size="xl" icon={faMicrophone} />
       </button>
