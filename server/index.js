@@ -41,6 +41,7 @@ app.post('/ask', async (req, res) => {
           content: prompt,
         },
       ],
+      max_tokens: 100,
     });
 
     console.log(response);
