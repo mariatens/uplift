@@ -19,13 +19,13 @@ function App() {
   window.crypto.getRandomValues(randomArray);
   const randomIndex = randomArray[0] % prompts.length;
   const selectedPrompt = prompts[randomIndex];
-
   const { transcript, browserSupportsSpeechRecognition, listening } =
     useSpeechRecognition();
 
   if (!browserSupportsSpeechRecognition) {
     return <span>Your browser doesn't support Speech to Text</span>;
   }
+
   const handleSubmit = () => {
     axios
       .post('http://localhost:3001/ask', {
@@ -39,7 +39,7 @@ function App() {
   return (
     <main className="landing-page">
       <h1>{selectedPrompt}</h1>
-      <div>
+      {/* <div>
         <button
           className="microphone"
           // onClick={()=>()}
@@ -50,7 +50,7 @@ function App() {
             color={listening ? 'red' : undefined}
           />
         </button>
-      </div>
+      </div> */}
       <button className="microphone" onClick={SpeechRecognition.startListening}>
         <FontAwesomeIcon size="8x" icon={faMicrophone} />
       </button>
