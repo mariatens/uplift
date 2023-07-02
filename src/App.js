@@ -2,7 +2,7 @@ import SpeechRecognition, {
   useSpeechRecognition,
 } from 'react-speech-recognition';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faMicrophone } from '@fortawesome/free-solid-svg-icons';
+import { faMicrophone, faVolumeUp } from '@fortawesome/free-solid-svg-icons';
 import './App.css';
 import { useState } from 'react';
 import image from './uplift.png';
@@ -32,7 +32,6 @@ function App() {
   if (!browserSupportsSpeechRecognition) {
     return <span>Your browser doesn't support Speech to Text</span>;
   }
-
   const handleSubmit = async () => {
     try {
       const result = await openai.createChatCompletion({
@@ -40,11 +39,12 @@ function App() {
         messages: [
           {
             role: 'user',
-            content: `You are a therapist, help with this issue: ${transcript}`,
+            content: `You are a therapist, help with this issue: I am feeling very sad`,
           },
         ],
+        temperature: 0.7,
       });
-      setApiResponse(result.data.choices[0].text);
+      setApiResponse(result.data.choices[0].message.content);
     } catch (error) {
       setApiResponse('Something is going wrong, Please try again.');
     }
@@ -53,6 +53,14 @@ function App() {
   return (
     <main className="landing-page">
       <h1>{selectedPrompt}</h1>
+      <div>
+        <button
+          className="microphone"
+          // onClick={()=>()}
+        >
+          <FontAwesomeIcon size="3x" icon={faVolumeUp} />
+        </button>
+      </div>
       <button className="microphone" onClick={SpeechRecognition.startListening}>
         <FontAwesomeIcon size="8x" icon={faMicrophone} />
       </button>
