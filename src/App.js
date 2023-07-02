@@ -6,7 +6,7 @@ import { faMicrophone, faVolumeUp } from '@fortawesome/free-solid-svg-icons';
 import './App.css';
 import { useState } from 'react';
 import image from './uplift.png';
-const { Configuration, OpenAIApi } = require('openai');
+import axios from 'axios';
 function App() {
   const [apiResponse, setApiResponse] = useState('');
   const prompts = [
@@ -20,34 +20,20 @@ function App() {
   const randomIndex = randomArray[0] % prompts.length;
   const selectedPrompt = prompts[randomIndex];
 
-  const configuration = new Configuration({
-    apiKey: process.env.REACT_APP_OPENAI_API_KEY,
-  });
-
-  const openai = new OpenAIApi(configuration);
-
-  const { transcript, browserSupportsSpeechRecognition } =
+  const { transcript, browserSupportsSpeechRecognition, listening } =
     useSpeechRecognition();
 
   if (!browserSupportsSpeechRecognition) {
     return <span>Your browser doesn't support Speech to Text</span>;
   }
-  const handleSubmit = async () => {
-    try {
-      const result = await openai.createChatCompletion({
-        model: 'gpt-3.5-turbo',
-        messages: [
-          {
-            role: 'user',
-            content: `You are a therapist, help with this issue: I am feeling very sad`,
-          },
-        ],
-        temperature: 0.7,
+  const handleSubmit = () => {
+    axios
+      .post('http://localhost:3001/ask', {
+        prompt: transcript,
+      })
+      .then((response) => {
+        setApiResponse(response.message);
       });
-      setApiResponse(result.data.choices[0].message.content);
-    } catch (error) {
-      setApiResponse('Something is going wrong, Please try again.');
-    }
   };
 
   return (
@@ -58,7 +44,11 @@ function App() {
           className="microphone"
           // onClick={()=>()}
         >
-          <FontAwesomeIcon size="3x" icon={faVolumeUp} />
+          <FontAwesomeIcon
+            size="3x"
+            icon={faVolumeUp}
+            color={listening ? 'red' : undefined}
+          />
         </button>
       </div>
       <button className="microphone" onClick={SpeechRecognition.startListening}>
