@@ -2,7 +2,7 @@ import SpeechRecognition, {
   useSpeechRecognition,
 } from 'react-speech-recognition';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faMicrophone, faVolumeUp } from '@fortawesome/free-solid-svg-icons';
+import { faMicrophone } from '@fortawesome/free-solid-svg-icons';
 import './App.css';
 import { useState } from 'react';
 import image from './uplift.png';
@@ -39,18 +39,6 @@ function App() {
   return (
     <main className="landing-page">
       <h1>{selectedPrompt}</h1>
-      {/* <div>
-        <button
-          className="microphone"
-          // onClick={()=>()}
-        >
-          <FontAwesomeIcon
-            size="3x"
-            icon={faVolumeUp}
-            color={listening ? 'red' : undefined}
-          />
-        </button>
-      </div> */}
       <button className="microphone" onClick={SpeechRecognition.startListening}>
         <FontAwesomeIcon size="8x" icon={faMicrophone} />
       </button>
