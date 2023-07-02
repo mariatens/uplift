@@ -46,7 +46,6 @@ function App() {
       });
       setApiResponse(result.data.choices[0].text);
     } catch (error) {
-      console.log('im here');
       setApiResponse('Something is going wrong, Please try again.');
     }
   };
@@ -55,7 +54,7 @@ function App() {
     <main className="landing-page">
       <h1>{selectedPrompt}</h1>
       <button className="microphone" onClick={SpeechRecognition.startListening}>
-        <FontAwesomeIcon size="xl" icon={faMicrophone} />
+        <FontAwesomeIcon size="8x" icon={faMicrophone} />
       </button>
       <div style={{ padding: '10px' }}>
         <button className="submit-btn" onClick={handleSubmit}>
